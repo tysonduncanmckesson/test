@@ -7,14 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SampleBootApplication {
   public static void main(String[] args) {
     SpringApplication.run(SampleBootApplication.class, args);
-
-    Character c = "".charAt(0);
-
-    String s = "";
-
-    s.concat(c.toString())
-
-      s.
   }
 
 }
