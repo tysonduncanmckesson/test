@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: sample-k8s
+    release: stable
+  name: sample-k8s
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: sample-k8s
+      release: stable
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: sample-k8s
+        release: stable
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: sample-k8s-config
+            - secretRef:
+                name: sample-k8s-secrets
+          image: generics/sample-k8s:0.0.0
+          #image: registry.mckesson.com/generics/sample-k8s:ad7dcd4
+          imagePullPolicy: IfNotPresent
+          name: sample-k8s
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 1Gi
+      restartPolicy: Always
+

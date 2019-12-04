@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: sample-k8s
+    release: stable
+  name: sample-k8s
+spec:
+  rules:
+    - host: sample-k8s.127.0.0.1.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: sample-k8s
+              servicePort: 8080
+

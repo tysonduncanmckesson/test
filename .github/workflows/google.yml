@@ -21,7 +21,8 @@ env:
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: us-west1-a
-  GKE_CLUSTER: example-gke-cluster
+  GKE_CLUSTER: gke_gke-uswest1-dev-bf3f_us-west1_gke-uswest1-dev
+  GKE_NAMESPACE: mck-tech-adp-dev
   IMAGE: gke-test
 
 jobs:
@@ -45,10 +46,10 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
-      
+
     # Build the Docker image
     - name: Build
-      run: |        
+      run: |
         docker build -t gcr.io/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
@@ -57,7 +58,7 @@ jobs:
     - name: Publish
       run: |
         docker push gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
-        
+
     # Set up kustomize
     - name: Set up Kustomize
       run: |
