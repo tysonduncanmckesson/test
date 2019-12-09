@@ -6,8 +6,8 @@ SHELL = /bin/bash
 TAG ?= $(shell git describe --always)
 
 # Docker.
-REGISTRY = registry.mckesson.com
-ORGANIZATION = generics
+REGISTRY = gcr.io
+ORGANIZATION = adp-01-prod-673a
 REPOSITORY = $(ORGANIZATION)/$(PROJECT)
 IMAGE = $(REPOSITORY):$(TAG)
 
@@ -46,6 +46,7 @@ docker: docker-push docker-tag docker-push ## Build, tag, and push docker image
 
 docker-build: ## Build docker image
 	docker build -t $(IMAGE) .
+	$(MAKE) docker-tag
 
 docker-push: ## Push docker image
 	docker push $(REGISTRY)/$(IMAGE)
@@ -71,3 +72,4 @@ docker-install-nonprod: ## Install in k8s on the non-production environment
 docker-uninstall-nonprod: ## Uninstall in k8s on the non-production-environment
 
 .PHONY: all clean dist docker docker-build docker-clean docker-install docker-install-local docker-install-nonprod docker-push docker-tag docker-uninstall-local docker-uninstall-nonprod init test uninstall
+

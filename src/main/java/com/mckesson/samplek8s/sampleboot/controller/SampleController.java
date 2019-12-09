@@ -20,8 +20,5 @@ public class SampleController {
   @AllArgsConstructor
   class Message {
     private String message;
-
-
-
   }
 }
